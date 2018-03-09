@@ -1,0 +1,50 @@
+  
+          {% for rating in ratings %}
+          <div class="card card-rating" id="card-rating-{{ rating.index }}">
+            <div class="card-content valign-wrapper">
+              
+              <a href="{{ url_for('profile', user_id=rating.user.id) }}">
+                <img src="{{ rating.user.image_url }}" alt="" class="user-img" onerror="profile_img_error(this);">
+              </a>
+              
+              <div>
+                <a href="{{ url_for('profile', user_id=rating.user.id) }}">
+                  <p class="black-text">{{ rating.user.name }}</p>
+                </a>
+                <p class="grey-text">{{ rating.time }}</p>
+              </div>
+            </div>
+            
+            {% if rating.image_url %}
+            <div class="card-image waves-effect waves-block waves-light">
+              <img class="activator" src="{{ rating.image_url }}">              
+            </div>
+            {% else %}
+            <div class="divider"></div>
+            {% endif %}
+
+            <div class="card-content">
+              <a href="{{ url_for('product', product_id=rating.product.id) }}">
+                <span class="card-title activator grey-text text-darken-4">{{ rating.product.name }}</span>
+              </a>
+            
+              <p class="orange-text">
+                {% for s in range(0, rating.star) %}
+                <i class="small mdi-action-grade"></i>
+                {% endfor %}  
+              </p>
+              <p>{{ rating.message }}</p>
+            </div>
+            <div class="card-action">              
+              
+              <a id="like-button-{{rating.id}}" href="" >
+                <i class="mdi-action-favorite{% if not rating.is_liked %}-outline{% endif %}"></i>
+                LIKE <span>{{ rating.like_number }}</span>
+              </a>
+             
+              <a href="{{ url_for('rating', rating_id=rating.id) }}">
+                COMMENT {{ rating.comment_number }}
+              </a>
+            </div>            
+          </div>
+          {% endfor %}

@@ -1,0 +1,163 @@
+  {% extends "base.html" %}
+  {% block body %}
+
+  <!-- !!!!!!!!!! -->
+  <!-- CONTAINER  -->
+  <!-- !!!!!!!!!! -->
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m6 offset-m3 l6 offset-l3">
+          <div class="card">
+            {% if rating %}
+            <div class="card-content valign-wrapper">
+
+              <a href="{{ url_for('profile', user_id=rating.user.id) }}">
+                <img src="{{ rating.user.image_url }}" alt="" class="user-img" onerror="profile_img_error(this);">
+              </a>
+
+              <div>
+                <a href="{{ url_for('profile', user_id=rating.user.id) }}">
+                  <p class="black-text">{{ rating.user.name }}</p>
+                </a>
+                <p class="grey-text">{{ rating.time }}</p>
+              </div>
+            </div>
+
+            {% if rating.image_url %}
+            <div class="card-image waves-effect waves-block waves-light">
+              <img class="activator" src="{{ rating.image_url }}">
+            </div>
+            {% else %}
+            <div class="divider"></div>
+            {% endif %}
+
+            <div class="card-content">
+              <a href="{{ url_for('product', product_id=rating.product.id) }}">
+                <span class="card-title activator grey-text text-darken-4">{{ rating.product.name }}</span>
+              </a>
+
+              <p class="orange-text">
+                {% for s in range(0, rating.star) %}
+                <i class="small mdi-action-grade"></i>
+                {% endfor %}
+              </p>
+              <p>{{ rating.message }}</p>
+            </div>
+
+
+            <div class="card-action">
+              <a id="like-button-{{rating.id}}">
+                <i class="mdi-action-favorite{% if not rating.is_liked %}-outline{% endif %}"></i>
+                LIKE <span>{{ rating.like_number }}</span>
+              </a>
+
+              <a href="{{ url_for('rating', rating_id=rating.id) }}">
+                COMMENT {{ rating.comment_number }}
+              </a>
+            </div>
+
+
+
+            <div class="grey lighten-4">
+
+              {% if rating.like_users %}
+              <div class="divider"></div>
+              <div class="card-content">
+                {% for user in rating.like_users[:-1] %}
+                <a href="{{ url_for('profile', user_id=user.id) }}">
+                  <span class="grey-text text-darken-1">{{ user.name }}, </span>
+                </a>
+                {% endfor %}
+                <a href="{{ url_for('profile', user_id=rating.like_users[-1].id) }}">
+                  <span class="grey-text text-darken-1">{{ rating.like_users[-1].name }}</span>
+                </a>
+                <span class="grey-text text-darken-0"> like this.</span>
+              </div>
+              {% endif %}
+
+              {% if rating.comments %}
+              {% if rating.like_users %}
+              <div class="divider card-divider"></div>
+              {% else %}
+              <div class="divider"></div>
+              {% endif %}
+              <div class="card-content">
+                {% if rating.comments %}
+                {% for comment in rating.comments[:-1] %}
+                <div class="valign-wrapper rating-comment">
+                  <a href="{{ url_for('profile', user_id=comment.user.id) }}">
+                    <img src="{{ comment.user.image_url }}" alt="" class="user-img">
+                  </a>
+
+                  <div>
+                    <a href="{{ url_for('profile', user_id=comment.user.id) }}">
+                      <span class="black-text">{{ comment.user.name }}</span>
+                    </a>
+                    <span class="grey-text"> &nbsp; {{ comment.time }}</span>
+                    <p>{{ comment.message }}</p>
+                  </div>
+                </div>
+                {% endfor %}
+                <div class="valign-wrapper">
+                  <a href="{{ url_for('profile', user_id=rating.comments[-1].user.id) }}">
+                    <img src="{{ rating.comments[-1].user.image_url }}" alt="" class="user-img">
+                  </a>
+
+                  <div>
+                    <a href="{{ url_for('profile', user_id=rating.comments[-1].user.id) }}">
+                      <span class="black-text">{{ rating.comments[-1].user.name }}</span>
+                    </a>
+                    <span class="grey-text"> &nbsp; {{ rating.comments[-1].time }}</span>
+                    <p>{{ rating.comments[-1].message }}</p>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+              {% endif %}
+            </div>
+            {% else %}
+            <div class="card-content center-align grey-text">
+              This Post doesn't exist!
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  {% endblock %}
+
+  {% block body_script %}
+
+  <script>
+    $(document).ready(function(){
+        $("[id^='like-button']").click(function(){
+            $.post("{{ url_for('rating_like_toggle' ) }}",
+            {
+              rating_id: $(this).attr('id').slice(12),
+            },
+            function(data_obj, status){
+              var like_button = "[id='like-button-".concat(data_obj.rating_id.toString()).concat("']");
+              var like_button_i = $(like_button).find('i');
+              var like_button_span = $(like_button).find('span');
+              if (data_obj.is_liked){
+                like_button_i.addClass("mdi-action-favorite");
+                like_button_i.removeClass("mdi-action-favorite-outline");
+                like_button_span.text(String(Number(like_button_span.text()) + 1));
+              } else {
+                like_button_i.addClass("mdi-action-favorite-outline");
+                like_button_i.removeClass("mdi-action-favorite");
+                like_button_span.text(String(Number(like_button_span.text()) - 1));
+              }
+            });
+        });
+    });
+  </script>
+  
+  {% endblock %}

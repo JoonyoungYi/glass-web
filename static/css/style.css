@@ -1,0 +1,150 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+html {
+  overflow-y:scroll;  
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+
+#brand-logo-img {
+  margin-bottom:-12px;
+  margin-right:8px;
+  height:36px;
+}
+
+#nav-mobile img {
+  height:36px;
+  margin-bottom:-12px;
+  margin-right:8px;
+}
+
+.comment-user-img {
+  width:48px;
+  height:48px;
+  margin-right:20px;	
+}
+
+.card-divider {
+  margin-left:20px;
+  margin-right:20px;		
+}
+
+.rating-comment {
+  margin-bottom:20px;		
+}
+
+.user-img-right {
+  margin-left: 76px;
+}
+
+.user-img-nomargin {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+}
+
+.user-img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  margin-right: 20px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+}
+
+.card-login {
+  margin-top: 32px;
+}
+
+.button-facebook {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+#login-progressbar {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.comparison-header-indicator {
+  height: 8px;
+}
+
+.comparison-image {
+  height:200px;
+  margin-right:24px;
+  margin-left:8px;
+}
+
+.card-comparison {
+  width:100%;
+}
+
+.navbar-card {
+  margin-top:0px;
+}
+
+.main-card {
+  margin-top:0px; 
+}
+
+.main-card .card-image {
+  max-height:450px;
+  overflow: hidden;
+}
+
+.main-card .container {
+  padding: 0;
+  width: 100%;
+}
+
+.main-card .btn-large {
+  margin: 8px;
+}
+
+.main-footer span {
+  margin: 8px;
+}
+
+.main-footer {
+  margin-bottom: 24px;
+}
+
+nav .container {
+}
+
+.tabs-wrapper .container {
+  padding-left: 0px;
+  padding-right: 16px;
+}
+
+.row.pinned {
+  width: 100%;
+}
+
+.tabs .indicator {
+  background-color: #5d4037;
+}
+
+.tabs .tab a {
+  color: #000000;
+}
+
+.tabs .tab a:hover {
+  color: #999999; 
+}
+
+.tabs-wrapper .row{
+  z-index: 1000;
+}

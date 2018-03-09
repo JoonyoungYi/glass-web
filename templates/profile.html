@@ -1,0 +1,312 @@
+  {% extends "base.html" %}
+  {% block body %}
+
+  <!-- !!!!!!!!!! -->
+  <!-- CONTAINER  -->
+  <!-- !!!!!!!!!! -->
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+
+      <div class="row">
+        <div class="col s12 m6 l6">
+
+          <div class="card">
+            <div class="card-content brown lighten-4 valign-wrapper">
+              <img class="user-img" src="{{ user.image_url }}" onerror="profile_img_error(this);">
+              <div>
+                <span class="card-title activator grey-text text-darken-4">{{ user.name }}</span>
+                <p>{{ user.about }}</p>
+              </div>
+            </div>
+
+            <div class="card-content valign-wrapper">
+              <div class="col s4 center">
+                <a href="{{ url_for('follower', user_id=user.id) }}" class="black-text">
+                  <p>FOLLOWER</p>
+                  <p>{{ user.follower_number }}</p>
+                </a>
+              </div>
+
+              <div class="col s4 center">
+                <a href="{{ url_for('following', user_id=user.id) }}" class="black-text">
+                  <p>FOLLOWING</p>
+                  <p>{{ user.following_number }}</p>
+                </a>
+              </div>
+
+              <div class="col s4 center">
+                {% if user.is_me %}
+                <a id="about-edit" class="waves-effect waves-light btn orange disabled grey white-text" href="#">EDIT PROFILE</a>
+                {% elif user.is_following %}
+                <a href="#" class="waves-effect waves-light btn orange" id="user-following-{{user.id}}"><p>UNFOLLOW</p></a>
+                {% else %}
+                <a href="#" class="waves-effect waves-light btn orange" id="user-following-{{user.id}}"><p>FOLLOW</p></a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          {% if beer_products %}
+          <div class="card">
+            <a href="{{ url_for('ranking', user_id=user.id, product_type_str='beer') }}">
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4"> BEER RANKING </span>
+              </div>
+            </a>
+
+            {% for product in beer_products %}
+            <div class="divider"></div>
+            <a href="{{ url_for('product', product_id=product.id) }}">
+              <div class="card-content valign-wrapper">
+                <div class="col s2">
+                  <img class="responsive-img" src="{{ product.image_url }}">
+                </div>
+                <div class="col s10">
+                  <p class="card-title black-text">{{ product.index }}. {{ product.name }}</p>
+                  <p class="grey-text">{{ product.brand }}</p>
+                </div>
+              </div>
+            </a>
+            {% endfor %}
+
+            <div class="card-action">
+              <a href="{{ url_for('ranking', user_id=user.id, product_type_str='beer') }}">MORE...</a>
+            </div>
+          </div>
+          {% endif %}
+
+          {% if user.is_me %}
+          <a class="" href="{{ url_for('multi', product_type_str='beer') }}">
+            <div class="card orange">
+              <div class="card-content">
+                <p class="card-title white-text">Rate More Beer!</p>
+                <p class="white-text">Through this, Rate More Beer!</p>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="card-content right">
+                <b class="white-text">Rate More Beer</b>
+              </div>
+            </div>
+          </a>
+          {% endif %}
+
+          {% if whisky_products %}
+          <div class="card">
+            <a href="{{ url_for('ranking', user_id=user.id, product_type_str='whisky') }}">
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">WHISKY RANKING </span>
+              </div>
+            </a>
+
+            {% for product in whisky_products %}
+            <div class="divider"></div>
+            <a href="{{ url_for('product', product_id=product.id) }}">
+              <div class="card-content valign-wrapper">
+                <div class="col s2">
+                  <img class="responsive-img" src="{{ product.image_url }}">
+                </div>
+                <div class="col s10">
+                  <p class="card-title black-text">{{ product.index }}. {{ product.name }}</p>
+                  <p class="grey-text">{{ product.brand }}</p>
+                </div>
+              </div>
+            </a>
+            {% endfor %}
+
+            <div class="card-action">
+              <a href="{{ url_for('ranking', user_id=user.id, product_type_str='whisky') }}">MORE...</a>
+            </div>
+          </div>
+          {% endif %}
+
+          {% if user.is_me %}
+          <a class="white-text" href="{{ url_for('multi', product_type_str='whisky') }}">
+            <div class="card orange">
+              <div class="card-content">
+                <p class="card-title white-text">Rate More Whisky!</p>
+                <p class="white-text">Through this, Rate More Whisky!</p>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="card-content right">
+                  <b class="white-text">Rate More Whisky</b>
+                </div>
+            </div>
+          </a>
+          {% endif %}
+        </div>
+
+        <div class="col s12 m6 l6">
+          {% for rating in ratings %}
+          <div class="card card-rating" id="card-rating-{{ rating.index }}">
+            <div class="card-content valign-wrapper">
+
+              <a href="{{ url_for('profile', user_id=rating.user.id) }}">
+                <img src="{{ rating.user.image_url }}" alt="" class="user-img" onerror="profile_img_error(this);">
+              </a>
+
+              <div>
+                <a href="{{ url_for('profile', user_id=rating.user.id) }}">
+                  <p class="black-text">{{ rating.user.name }}</p>
+                </a>
+                <p class="grey-text">{{ rating.time }}</p>
+              </div>
+            </div>
+
+            {% if rating.image_url %}
+            <div class="card-image waves-effect waves-block waves-light">
+              <img class="activator" src="{{ rating.image_url }}">
+            </div>
+            {% else %}
+            <div class="divider"></div>
+            {% endif %}
+
+            <div class="card-content">
+              <a href="{{ url_for('product', product_id=rating.product.id) }}">
+                <span class="card-title activator grey-text text-darken-4">{{ rating.product.name }}</span>
+              </a>
+
+              <p class="orange-text">
+                {% for s in range(0, rating.star) %}
+                <i class="small mdi-action-grade"></i>
+                {% endfor %}
+              </p>
+              <p>{{ rating.message }}</p>
+            </div>
+            <div class="card-action">
+
+              <a id="like-button-{{rating.id}}" href="">
+                <i class="mdi-action-favorite{% if not rating.is_liked %}-outline{% endif %}"></i>
+                LIKE <span>{{ rating.like_number }}</span>
+              </a>
+
+              <a href="{{ url_for('rating', rating_id=rating.id) }}">
+                COMMENT {{ rating.comment_number }}
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+
+          {% if progressbar %}
+          <div class="card" id="lastPostsLoader">
+            <div class="card-content center">
+              <div class="preloader-wrapper big active center">
+                <div class="spinner-layer spinner-yellow-only">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div><div class="gap-patch">
+                    <div class="circle"></div>
+                  </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  {% if user.is_me %}
+  <!-- Modal Structure -->
+  <div id="comparison-modal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>!!!!!!!!!!!!!</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+    </div>
+  </div>
+  {% endif %}
+
+  {% endblock %}
+
+  {% block body_script %}
+
+  <!-- !!!!!!!!!! -->
+  <!-- SCRIPTS    -->
+  <!-- !!!!!!!!!! -->
+
+  <script type=text/javascript>
+  $('body').on('click', "[id^='like-button']", function(){
+          $.post("{{ url_for('rating_like_toggle') }}",
+          {
+            rating_id: $(this).attr('id').slice(12),
+          },
+          function(data_obj, status){
+            var like_button = "[id='like-button-".concat(data_obj.rating_id.toString()).concat("']");
+            var like_button_i = $(like_button).find('i');
+            var like_button_span = $(like_button).find('span');
+            if (data_obj.is_liked){
+              like_button_i.addClass("mdi-action-favorite");
+              like_button_i.removeClass("mdi-action-favorite-outline");
+              like_button_span.text(String(Number(like_button_span.text()) + 1));
+            } else {
+              like_button_i.addClass("mdi-action-favorite-outline");
+              like_button_i.removeClass("mdi-action-favorite");
+              like_button_span.text(String(Number(like_button_span.text()) - 1));
+            }
+          });
+      });
+
+  $(window).scroll(function(){
+      if  ($(window).scrollTop() == $(document).height() - $(window).height()){
+        lastPostFunc();
+      }
+  });
+
+  function lastPostFunc(){
+    $.get("{{ url_for('profile', user_id=user.id)}}" + "?offset=" + $(".card-rating:last").attr("id").slice(12),
+      function(data){
+        if (data != "") {
+          $(".card-rating:last").after(data);
+        } else {
+          $("#lastPostsLoader").hide();
+        }
+      });
+  };
+
+  {% if user.is_me %}
+
+  $(document).ready(function() {
+      // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+      $('.modal-trigger').leanModal();
+  });
+
+  $('#about-edit').on('click', function(){
+    Materialize.toast('Coming Soon!', 4000,'',function(){});
+  });
+
+  {% else %}
+  $('body').on('click', "[id^='user-following-']", function(){
+          $.post("{{ url_for('user_following_toggle') }}",
+          {
+            user_id: $(this).attr('id').slice(15),
+          },
+          function(data_obj, status){
+            var following_button = "[id='user-following-".concat(data_obj.user_id.toString()).concat("']");
+            var following_button_p = $(following_button).find('p');
+            if (data_obj.is_following){
+              following_button_p.text("UNFOLLOW");
+            } else {
+              following_button_p.text("FOLLOW");
+            }
+          });
+      });
+  {% endif %}
+
+  </script>
+
+  {% endblock %}

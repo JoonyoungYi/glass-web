@@ -1,0 +1,21 @@
+
+            
+            {% for product in products %}   
+            <div class="card-product" id="card-product-{{ product.index }}">         
+              
+              <div class="divider"></div>
+
+              <a href="{{ url_for('product', product_id=product.id) }}">
+                <div class="card-content valign-wrapper">              
+                  <div class="col s2">
+                    <img class="responsive-img" src="{{ product.image_url }}">
+                  </div>
+                  <div class="col s10">
+                    <p class="card-title black-text">{{ product.index }}. {{ product.name }}</p>
+                    <p class="grey-text">{{ product.brand }}</p>              
+                  </div>
+                </div>
+              </a>
+            </div>
+            {% endfor %}
+

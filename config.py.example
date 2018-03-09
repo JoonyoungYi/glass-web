@@ -1,0 +1,4 @@
+# set the secret key.  keep this really secret:
+SECRET_KEY = None
+API_BASE_URL = 'https://brew.glass/api/v2'
+FACEBOOK_APP_ID = ''

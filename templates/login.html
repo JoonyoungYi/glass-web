@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Glass</title>
+  
+  <!-- CSS  -->
+  <link href="{{url_for('static', filename='css/materialize.min.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{{url_for('static', filename='css/style.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="shortcut icon" href="{{url_for('static', filename='images/logo_favicon.ico') }}"/>
+</head>
+
+<body class="grey lighten-2">
+
+  <!-- !!!!!!!!!! -->
+  <!-- ACTION BAR -->
+  <!-- !!!!!!!!!! -->
+  <div class="navbar-fixed">
+    <nav class="brown darken-2" role="navigation">
+      <div class="row nav-wrapper">
+        <div class="col s4 offset-s2">
+          <a href="{{ url_for('main') }}">
+            <img id="brand-logo-img" src="{{ url_for('static', filename='images/logo.png') }}" alt="logo"/>
+            <span class="brand-logo">GLASS</span>
+          </a>
+        </div>
+        <div class="col s4">
+        </div>
+      </div>      
+    </nav>
+  </div>
+
+<!--
+  Below we include the Login Button social plugin. This button uses
+  the JavaScript SDK to present a graphical Login button that triggers
+  the FB.login() function when clicked.
+-->
+  
+  <!-- !!!!!!!!!! -->
+  <!-- CONTAINER  -->
+  <!-- !!!!!!!!!! -->
+  <div class="container">
+    <div class="section">
+      <div class="row">
+        <div class="col s12 m8 offset-m2 l8 offset-l2">
+          <div class="card card-login" >
+
+            <div class="card-content brown lighten-4">
+              <span class="card-title activator grey-text text-darken-4">LOGIN</span>
+              <p>Login Needed</p>
+            </div>
+
+            <div class="card-content center">
+
+              <div id="login-progressbar-container">
+
+                <div id="login-progressbar" class="preloader-wrapper big active center">
+                  <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div><div class="gap-patch">
+                      <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="login-progressbar-status">      
+                  Please wait...            
+                </div>
+              </div>
+
+              <div id="login-container">
+                <p>
+                  <a href="#" onclick="fb_login();" class="waves-effect waves-light btn-large blue darken-4 button-facebook">
+                    LOGIN with Facebook
+                  </a>
+                </p>
+
+                <p>We don't post without agreement</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div> 
+
+  <!-- !!!!!!!!!! -->
+  <!-- SCRIPTS    -->
+  <!-- !!!!!!!!!! -->
+  <script src="{{url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script src="{{url_for('static', filename='js/materialize.min.js') }}"></script>
+  <script>
+
+    $(document).ready(function(){
+      $('#login-progressbar-container').hide();
+      $('#login-container').show();
+    });
+
+
+    function fb_login(){
+      FB.login(function(response){
+        console.log('statusChangeCallback');
+        console.log(response);
+        // The response object is returned with a status field that lets the
+        // app know the current login status of the person.
+        // Full docs on the response object can be found in the documentation
+        // for FB.getLoginStatus().
+        if (response.status === 'connected') {
+          
+          // Logged into your app and Facebook.
+          testAPI();
+          post('{{ url_for('login') }}', {token: response.authResponse.accessToken});
+
+        } else if (response.status === 'not_authorized') {
+          // The person is logged into Facebook, but not your app.
+          document.getElementById('status').innerHTML = 'Please log ' +
+            'into this app.';
+        } else {
+          // The person is not logged into Facebook, so we're not sure if
+          // they are logged into this app or not.
+          document.getElementById('status').innerHTML = 'Please log ' +
+            'into Facebook.';
+        }
+      }); 
+    }
+
+    // This is called with the results from from FB.getLoginStatus().
+    function statusChangeCallback(response) {
+      console.log('statusChangeCallback');
+      console.log(response);
+      // The response object is returned with a status field that lets the
+      // app know the current login status of the person.
+      // Full docs on the response object can be found in the documentation
+      // for FB.getLoginStatus().
+      if (response.status === 'connected') {
+        
+        // Logged into your app and Facebook.
+        testAPI();
+        post('{{ url_for('login') }}', {token: response.authResponse.accessToken});
+
+      } else if (response.status === 'not_authorized') {
+        // The person is logged into Facebook, but not your app.
+        document.getElementById('status').innerHTML = 'Please log ' +
+          'into this app.';
+      } else {
+        // The person is not logged into Facebook, so we're not sure if
+        // they are logged into this app or not.
+        document.getElementById('status').innerHTML = 'Please log ' +
+          'into Facebook.';
+      }
+    }
+
+    // This function is called when someone finishes with the Login
+    // Button.  See the onlogin handler attached to it in the sample
+    // code below.
+    function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }
+
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '{{ facebook_app_id }}',
+        cookie     : true,  // enable cookies to allow the server to access 
+                            // the session
+        xfbml      : true,  // parse social plugins on this page
+        version    : 'v2.2' // use version 2.2
+      });
+
+      // Now that we've initialized the JavaScript SDK, we call 
+      // FB.getLoginStatus().  This function gets the state of the
+      // person visiting this page and can return one of three states to
+      // the callback you provide.  They can be:
+      //
+      // 1. Logged into your app ('connected')
+      // 2. Logged into Facebook, but not your app ('not_authorized')
+      // 3. Not logged into Facebook and can't tell if they are logged into
+      //    your app or not.
+      //
+      // These three cases are handled in the callback function.
+
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    };
+
+    // Load the SDK asynchronously
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    // Here we run a very simple test of the Graph API after login is
+    // successful.  See statusChangeCallback() for when this call is made.
+    function testAPI() {
+      console.log('Welcome!  Fetching your information.... ');
+      FB.api('/me', function(response) {
+        console.log('Successful login for: ' + response.name);
+
+        $('#login-progressbar-container').show();
+        $('#login-container').hide();
+
+        document.getElementById('login-progressbar-status').innerHTML =
+          'We are logging in, ' + response.name + '...';
+      });
+    }
+
+    function post(path, params, method) {
+      method = method || "post"; // Set method to post by default if not specified.
+
+      // The rest of this code assumes you are not using a library.
+      // It can be made less wordy if you use one.
+      var form = document.createElement("form");
+      form.setAttribute("method", method);
+      form.setAttribute("action", path);
+
+      for(var key in params) {
+          if(params.hasOwnProperty(key)) {
+              var hiddenField = document.createElement("input");
+              hiddenField.setAttribute("type", "hidden");
+              hiddenField.setAttribute("name", key);
+              hiddenField.setAttribute("value", params[key]);
+
+              form.appendChild(hiddenField);
+           }
+      }
+
+      document.body.appendChild(form);
+      form.submit();
+    } 
+  </script>
+
+</body>
+</html>

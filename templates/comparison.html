@@ -1,0 +1,118 @@
+  {% if tutorial %}
+    {% extends "base_tutorial.html" %}
+  {% else%}
+    {% extends "base.html" %}
+  {% endif %}
+  {% block body %}
+
+  <div class="card navbar-card" >
+    <div class="card-content">
+      <div class="container">
+        <div class="section">
+          <span class="card-title black-text">{% if tutorial %}<b>STEP 2:</b> {% endif %}Choose the Drink That You Like More.</span>
+          <p>You've compared {{ done_number }} pairs of drinks. Just {{ todo_number }} mores to go</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="comparison-header-indicator grey lighten-2"></div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+
+      <div class="row">
+
+        <div class="col s6">
+
+          <div class="card card-comparison waves-effect waves-orange waves-light" id="comparison-product-a" value="{{ product_a.id }}">
+
+            <div class="card-content valign-wrapper">
+              <img class="comparison-image" src="{{ product_a.image_url }}">
+              <span class="card-title black-text">{{ product_a.name }}</span>
+            </div>
+
+            {% if product_a.last_rating %}
+            <div class="divider"></div>
+
+            <div class="card-content">
+              {% if product_a.last_rating.message != "" %}
+              <span>"{{ product_a.last_rating.message }}"</span><span class="grey-text"> - {{ product_a.last_rating.time }}</span>
+              {% else %}
+              <span class="grey-text">You rated this drink at {{ product_a.last_rating.time }}.</span>
+              {% endif %}
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+
+        <div class="col s6">
+
+          <div class="card card-comparison waves-effect waves-orange waves-light" id="comparison-product-b" value="{{ product_b.id }}">
+
+            <div class="card-content valign-wrapper">
+                <img class="comparison-image" src="{{ product_b.image_url }}">
+                <span class="card-title black-text">{{ product_b.name }}</span>
+            </div>
+
+            {% if product_b.last_rating %}
+            <div class="divider"></div>
+
+            <div class="card-content">
+              {% if product_b.last_rating.message != "" %}
+              <span>"{{ product_b.last_rating.message }}"</span><span class="grey-text"> - {{ product_b.last_rating.time }}</span>
+              {% else %}
+              <span class="grey-text">You rated this drink at {{ product_b.last_rating.time }}.</span>
+              {% endif %}
+            </div>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% endblock %}
+
+  {% block body_script %}
+
+  <!-- !!!!!!!!!! -->
+  <!-- SCRIPTS    -->
+  <!-- !!!!!!!!!! -->
+
+  <script>
+    $('#comparison-product-a').on('click', function(){
+        product_a_id = $('#comparison-product-a').attr('value');
+        product_b_id = $('#comparison-product-b').attr('value');
+
+        $.post("{{ url_for('comparison_add') }}",
+          {
+            win_product_id: product_a_id,
+            lose_product_id: product_b_id,
+          },
+          function(data, status){
+            //var data_obj = jQuery.parseJSON(data);
+            location.reload();
+          });
+      });
+
+    $('#comparison-product-b').on('click', function(){
+        product_a_id = $('#comparison-product-a').attr('value');
+        product_b_id = $('#comparison-product-b').attr('value');
+
+        $.post("{{ url_for('comparison_add') }}",
+          {
+            win_product_id: product_b_id,
+            lose_product_id: product_a_id,
+          },
+          function(data, status){
+            //var data_obj = jQuery.parseJSON(data);
+            location.reload();
+          });
+      });
+  </script>
+
+  {% endblock %}

@@ -1,0 +1,78 @@
+  {% extends "base.html" %}
+  {% block body %}
+
+  <!-- !!!!!!!!!! -->
+  <!-- CONTAINER  -->
+  <!-- !!!!!!!!!! -->
+  <div class="container">
+    <div class="section">
+      <ul class="collection">
+        {% for alarm in alarms %}  
+        {% if alarm.type == 1 %}
+        <li class="collection-item avatar">
+          <a class="valign-wrapper" href="{{ url_for('rating', rating_id=alarm.rating_id) }}">
+            <img src="{{ alarm.image_url }}" alt="" class="user-img">
+            <div>
+              <p class="title black-text">{{ alarm.user_name }} likes your review.</p>
+              <p class="grey-text">{{alarm.time}}</p>
+            </div>
+          </a>
+        </li>
+        {% elif alarm.type == 2 %}
+        <li class="collection-item avatar">
+          <a class="valign-wrapper" href="{{ url_for('profile', user_id=alarm.user_id) }}">
+            <img src="{{ alarm.image_url }}" alt="" class="user-img">
+            <div>
+              <p class="title black-text">{{ alarm.user_name }} is now following you.</p>
+              <p class="grey-text">{{alarm.time}}</p>
+            </div>
+          </a>
+        </li>
+        {% elif alarm.type == 3 %}
+        <li class="collection-item avatar">
+          <a class="valign-wrapper" href="{{ url_for('profile', user_id=alarm.user_id) }}">
+            <img src="{{ alarm.image_url }}" alt="" class="user-img">
+            <div>
+              <p class="title black-text">{{ alarm.user_name }} has joined the Glass community!</p>
+              <p class="grey-text">{{alarm.time}}</p>
+            </div>
+          </a>
+        </li>
+        {% elif alarm.type == 4 %}
+        <li class="collection-item avatar">
+          <a class="valign-wrapper" href="{{ url_for('rating', rating_id=alarm.rating_id) }}">
+            <img src="{{ alarm.image_url }}" alt="" class="user-img">
+            <div>
+              <p class="title black-text">{{ alarm.user_name }} commented on your review.</p>
+              <p class="grey-text">{{alarm.time}}</p>
+            </div>
+          </a>
+        </li>
+        {% elif alarm.type == 5 %}
+        <li class="collection-item avatar">
+          <a class="valign-wrapper" href="{{ url_for('rating', rating_id=alarm.rating_id) }}">
+            <img src="{{ alarm.image_url }}" alt="" class="user-img">
+            <div>
+              <p class="title black-text">{{ alarm.user_name }} commented on {{ alarm.rating_user_name }}'s review.'</p>
+              <p class="grey-text">{{alarm.time}}</p>
+            </div>
+          </a>
+        </li>
+        {% elif alarm.type == 6 %}
+        <li class="collection-item avatar">
+          <a class="valign-wrapper" href="{{ alarm.url }}">
+            <img src="{{ url_for('static', filename='images/alarm/alarm_default.png') }}" alt="" class="user-img">
+            <div>
+              <p class="title black-text">{{ alarm.msg }}</p>
+              <p class="grey-text">{{alarm.time}}</p>
+            </div>
+          </a>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+      
+    </div>    
+  </div>
+
+  {% endblock %}

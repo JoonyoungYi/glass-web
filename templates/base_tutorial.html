@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Glass</title>
+
+  <!-- CSS  -->
+  <link href="{{url_for('static', filename='css/materialize.min.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{{url_for('static', filename='css/style.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="shortcut icon" href="{{url_for('static', filename='images/logo_favicon.ico') }}"/>
+</head>
+
+
+<body class="grey lighten-2">
+
+  <!-- !!!!!!!!!! -->
+  <!-- ACTION BAR -->
+  <!-- !!!!!!!!!! -->
+  <div class="navbar-fixed">
+    <nav class="brown darken-2" role="navigation">
+      <div class="container">
+        <div class="nav-wrapper">
+          <a href="{{ url_for('main') }}">
+            <img id="brand-logo-img" src="{{url_for('static', filename='images/logo.png') }}" alt="logo"/>
+            <span class="brand-logo">GLASS</span>
+          </a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            {% if tutorial.prev_step %}
+            <li><a class="btn white brown-text" href="{{ tutorial.prev_step }}">PREV</a></li>
+            {% endif %}
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+            {% if tutorial.next_step %}
+            <li><a class="btn {% if tutorial.next_step_activated %}orange{% else %}grey{% endif %}" {% if tutorial.next_step_activated %}href="{{ tutorial.next_step }}"{% endif %}>NEXT</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>      
+    </nav>
+  </div>
+
+  {% block body %}{% endblock %}
+
+  <!-- !!!!!!!!!! -->
+  <!-- SCRIPTS    -->
+  <!-- !!!!!!!!!! -->
+
+
+  <script src="{{url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script src="{{url_for('static', filename='js/materialize.min.js') }}"></script>
+  <script type="text/javascript">
+    function profile_img_error(image) {
+      image.onerror = "";
+      image.src = "{{url_for('static', filename='images/default_profile.jpg') }}";
+      return true;
+    }
+  </script>
+
+  {% block body_script %}{% endblock %}
+
+  </body>
+</html>

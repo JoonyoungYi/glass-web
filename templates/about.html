@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Glass</title>
+
+  <!-- CSS  -->
+  <link href="{{url_for('static', filename='css/materialize.min.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{{url_for('static', filename='css/style.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="shortcut icon" href="{{url_for('static', filename='images/logo_favicon.ico') }}"/>
+</head>
+
+
+<body class="grey lighten-2">
+
+  <!-- !!!!!!!!!! -->
+  <!-- ACTION BAR -->
+  <!-- !!!!!!!!!! -->
+  
+  <nav class="brown darken-2" role="navigation">
+    <div class="container">
+      <div class="nav-wrapper">      
+        <a href="{{ url_for('main') }}">
+          <img id="brand-logo-img" src="{{url_for('static', filename='images/logo.png') }}" alt="logo"/>
+          <span class="brand-logo">GLASS</span>
+        </a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li></li>
+        </ul>      
+      </div>
+    </div>      
+  </nav>
+
+  <!-- !!!!!!!!!!!!!!! -->
+  <!-- ACTION BAR TABS -->
+  <!-- !!!!!!!!!!!!!!! -->
+    
+  <div class="tabs-wrapper" style="width:100%">
+    <div class="row white z-depth-1">
+      <div class="container">
+        <ul class="tabs">
+          <li class="tab col s3"><a class="active" href="#features">FEATURES</a></li>
+          <li class="tab col s3"><a href="#faq">FAQ</a></li>
+          <li class="tab col s3"><a href="#members">MEMBERS</a></li>
+          <li class="tab col s3"><a href="#contact">CONTACT</a></li>
+        </ul>
+      </div>  
+    </div>  
+  </div>
+
+  <!-- !!!!!!!!!! -->
+  <!-- FEATURES   -->
+  <!-- !!!!!!!!!! -->
+
+  <div id="features" class="container">
+    <div class="section">      
+      
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title brown-text darken-2">FEATURES</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card-content">
+          <div class="row">
+            <div class="col s12 m6 l3 center-align">
+              <i class="large mdi-action-stars brown-text darken-2"></i>
+              <h5 class="brown-text darken-2">Rate Your Dose</h5>
+              <p>What’s that you’re drinking now?<br/>
+                Rate your drink and share with <br/>
+                the Glass society.</p>
+            </div>
+            <div class="col s12 m6 l3 center-align">
+              <i class="large mdi-action-swap-horiz brown-text darken-2"></i>
+              <h5 class="brown-text darken-2">1 on 1</h5>
+              <p>From your own list of booze,<br/>
+                tap, tap, tap to see which one you <br/>
+                love the most.</p>
+            </div>
+            <div class="col s12 m6 l3 center-align">
+              <i class="large mdi-action-thumb-up brown-text darken-2"></i>
+              <h5 class="brown-text darken-2">Best Recommendations</h5>
+              <p>With world-best recommendation <br/>
+                algorithms (so far, at least!)<br/>
+                drinking will be even more fun.</p>
+            </div>
+            <div class="col s12 m6 l3 center-align">
+              <i class="large mdi-action-perm-identity brown-text darken-2"></i>
+              <h5 class="brown-text darken-2">Show Off Your Booze</h5>
+              <p>Show off your favorite. Find <br/>
+                friends who are ready to share <br/>
+                that elixir!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- !!!!!!!!!! -->
+  <!-- FAQ        -->
+  <!-- !!!!!!!!!! -->
+  <div id="faq" class="container">
+    <div class="section">      
+      
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title brown-text darken-2">Frequently Asked Questions</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card-content">
+          <h5 class="brown-text darken-2">
+            <i class="small mdi-action-done "></i> 
+            <span>How many ratings and "1-on-1 booze battles" are needed to make Glass work?</span>
+          </h5>
+          <p>You can stop at any time. Glass learns from your ratings and "1-on-1 battles" to read your preferences accurately. So, tap, tap, tap, whenever you can.</p>
+          <br/>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card-content">
+          <h5 class="brown-text darken-2">
+            <i class="small mdi-action-done "></i> 
+            <span>What is your drink of choice?</span>
+          </h5>
+          <p>I enjoy Sculfin IPA from Ballast Point Brewery. What’s yours?</p>
+          <br/>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card-content">
+          <h5 class="brown-text darken-2">
+            <i class="small mdi-action-done "></i> 
+            <span>Who made Glass? Are you hiring?</span>
+          </h5>
+          <p>Top secret.</p>
+          <br/>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card-content">
+          <h5 class="brown-text darken-2">
+            <i class="small mdi-action-done "></i> 
+            <span>When are you planning to release the completed version of Glass?</span>
+          </h5>
+          <p>We are working and drinking very hard to release the official version. We expect to have it ready in 2015.</p>
+          <br/>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card-content">
+          <h5 class="brown-text darken-2">
+            <i class="small mdi-action-done "></i> 
+            <span>Which versions of OS is Glass compatible with?</span>
+          </h5>
+          <p>For iOS, you need at least iOS8, and for Android, you can check it now by visiting Google Play store.</p>
+          <br/>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card-content">
+          <h5 class="brown-text darken-2">
+            <i class="small mdi-action-done "></i> 
+            <span>Are recommendations accurate?</span>
+          </h5>
+          <p>Yes. They are undoubtedly accurate. We developed the most accurate recommendation engine in the world by using rating data and comparison data. This means that you can contribute to make it even better by being a member of the Glass society.</p>
+          <br/>
+        </div>
+
+      </div>
+
+    </div>  
+  </div>
+
+  <!-- !!!!!!!!!! -->
+  <!-- MEMBERS    -->
+  <!-- !!!!!!!!!! -->
+  <div id="members" class="container">
+    <div class="section">      
+      
+      <div class="row">
+        <div class="col s12 m6 l3">
+          
+          <div class="card">
+            <div class="card-content center">
+              <p class="grey-text"><b>KAIST, Director</b></p>
+            </div>            
+
+            <div class="divider"></div>
+
+            <a href="{{ url_for('profile', user_id=4 ) }}">
+              <div class="card-content center">
+                <img src="{{ url_for('static', filename='images/about/icon_jl.png' ) }}" alt="" class="user-img" onerror="profile_img_error(this);">
+                <p class="title black-text">Jongchan Lee</p>                
+                <p class="grey-text">I want to drink beer.</p>
+              </div>
+            </a>
+          </div> 
+
+          <div class="card">
+            <div class="card-content center">
+              <p class="grey-text"><b>KAIST, Android developer</b></p>
+            </div>            
+
+            <div class="divider"></div>
+
+            <a href="{{ url_for('profile', user_id=2 ) }}">
+              <div class="card-content center">
+                <img src="{{ url_for('static', filename='images/about/icon_dj.png' ) }}" alt="" class="user-img" onerror="profile_img_error(this);">
+                <p class="title black-text">Daniel Jeon</p>                
+                <p class="grey-text">My dream is to buy the Apple.</p>
+              </div>
+            </a>
+          </div>        
+
+          <div class="card">
+            <div class="card-content center">
+              <p class="grey-text"><b>KAIST, Data analyst</b></p>
+            </div>            
+
+            <div class="divider"></div>
+
+            <a href="{{ url_for('profile', user_id=8 ) }}">
+              <div class="card-content center">
+                <img src="{{ url_for('static', filename='images/about/icon_kp.jpg' ) }}" alt="" class="user-img" onerror="profile_img_error(this);">
+                <p class="title black-text">Keunhong Park</p>                
+                <p class="grey-text"></p>
+              </div>
+            </a>
+          </div>          
+
+        </div>
+
+
+        <div class="col s12 m6 l3">
+          
+          <div class="card">
+            <div class="card-content center">
+              <p class="grey-text"><b>KAIST, iOS developer</b></p>
+            </div>            
+
+            <div class="divider"></div>
+
+            <a href="{{ url_for('profile', user_id=6 ) }}">
+              <div class="card-content center">
+                <img src="{{ url_for('static', filename='images/about/icon_wk.png' ) }}" alt="" class="user-img" onerror="profile_img_error(this);">
+                <p class="title black-text">Wonjung Kim</p>                
+                <p class="grey-text">...</p>
+              </div>
+            </a>
+          </div>                   
+
+          <div class="card">
+            <div class="card-content center">
+              <p class="grey-text"><b>KAIST, Designer</b></p>
+            </div>            
+
+            <div class="divider"></div>
+
+            <a href="{{ url_for('profile', user_id=13 ) }}">
+              <div class="card-content center">
+                <img src="{{ url_for('static', filename='images/about/icon_js.png' ) }}" alt="" class="user-img" onerror="profile_img_error(this);">
+                <p class="title black-text">Jiwon Shin</p>                
+                <p class="grey-text">At least I draw 188 different views for this app.</p>
+              </div>
+            </a>
+          </div>          
+
+          
+        </div>
+
+        <div class="col s12 m6 l3">
+          
+          <div class="card">
+            <div class="card-content center">
+              <p class="grey-text"><b>KAIST, Data analyst</b></p>
+            </div>            
+
+            <div class="divider"></div>
+
+            <a href="{{ url_for('profile', user_id=5 ) }}">
+              <div class="card-content center">
+                <img src="{{ url_for('static', filename='images/about/icon_jy.png' ) }}" alt="" class="user-img" onerror="profile_img_error(this);">
+                <p class="title black-text">JoonYoung Yi</p>                
+                <p class="grey-text">Recommendation is an art.</p>
+              </div>
+            </a>
+          </div>
+
+          <div class="card">
+            <div class="card-content center">
+              <p class="grey-text"><b>KAIST, Marketer</b></p>
+            </div>            
+
+            <div class="divider"></div>
+
+            <a href="{{ url_for('profile', user_id=120 ) }}">
+              <div class="card-content center">
+                <img src="{{ url_for('static', filename='images/about/icon_hl.jpg' ) }}" alt="" class="user-img" onerror="profile_img_error(this);">
+                <p class="title black-text">Hyunseo Lim</p>                
+                <p class="grey-text"></p>
+              </div>
+            </a>
+          </div>                    
+
+          
+        </div>
+
+        <div class="col s12 m6 l3">
+          
+          <div class="card">
+            <div class="card-content center">
+              <p class="grey-text"><b>KAIST, Server developer</b></p>
+            </div>            
+
+            <div class="divider"></div>
+
+            <a href="{{ url_for('profile', user_id=1 ) }}">
+              <div class="card-content center">
+                <img src="{{ url_for('static', filename='images/about/icon_jp.png' ) }}" alt="" class="user-img" onerror="profile_img_error(this);">
+                <p class="title black-text">Jungkook Park</p>                
+                <p class="grey-text">Beautiful mind ⊢ Beautiful code</p>
+              </div>
+            </a>
+          </div>          
+
+          <div class="card">
+            <div class="card-content center">
+              <p class="grey-text"><b>KAIST, Web developer</b></p>
+            </div>            
+
+            <div class="divider"></div>
+
+            <a href="{{ url_for('profile', user_id=33 ) }}">
+              <div class="card-content center">
+                <img src="{{ url_for('static', filename='images/about/icon_jk.jpg' ) }}" alt="" class="user-img" onerror="profile_img_error(this);">
+                <p class="title black-text">Jin Han Kim</p>                
+                <p class="grey-text"></p>
+              </div>
+            </a>
+          </div>      
+          
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- !!!!!!!!!! -->
+  <!-- CONTACT  -->
+  <!-- !!!!!!!!!! -->
+  <div id="contact" class="container">
+    <div class="section">      
+      
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title brown-text darken-2">CONTACT</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card-content center-align">
+          <p>We’d love to hear from you. If you have questions about Glass application, contact us through e-mail.</p>
+
+          <br/>
+
+          <p>
+            <a class="waves-effect waves-light btn-large red" href="mailto:glass.brew@gmail.com"><i class="left mdi-action-contacts"></i>glass.brew@gmail.com</a>
+          </p>
+
+          <br/>
+
+          <p>
+            <a class="waves-effect waves-light btn-large indigo"><i class="left mdi-action-contacts"></i>FACEBOOK</a>
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+    
+  <!-- !!!!!!!!!! -->
+  <!-- FOOTER  -->
+  <!-- !!!!!!!!!! -->
+
+  <div class="container center-align main-footer">
+    <span class="grey-text">©2014-2015 Brew Glass Inc.</span>
+  </div>
+
+  <!-- !!!!!!!!!! -->
+  <!-- SCRIPTS    -->
+  <!-- !!!!!!!!!! -->
+
+  <script src="{{url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script src="{{url_for('static', filename='js/materialize.min.js') }}"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.tabs-wrapper .row').pushpin({ top: $('.tabs-wrapper').offset().top });
+      $('ul.tabs').tabs();
+    });
+
+    function profile_img_error(image) {
+      image.onerror = "";
+      image.src = "{{url_for('static', filename='images/default_profile.jpg') }}";
+      return true;
+    }
+  </script>
+
+  </body>
+</html>

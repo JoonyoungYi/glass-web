@@ -1,0 +1,42 @@
+            <div class="card-content">
+              <span class="brown-text darken-2">Recommend</span>              
+            </div>
+
+            {% for product in products %}
+            <a href="{{url_for('product', product_id=product.id)}}"> 
+              <div class="divider"></div>
+
+              {% if product.is_main %}
+              <div class="z-depth-2">
+
+                <div class="card-image ">
+                  <img class="responsive-img" src="{{ product.chosen_image_url }}">
+                </div>
+
+                <div class="card-content valign-wrapper">              
+                  <div class="col s2">
+                    <img class="responsive-img" src="{{ product.image_url }}">
+                  </div>
+                  <div class="col s10">
+                    <p class="black-text">{{ product.index }}. {{ product.name }}</p>
+                    <p class="grey-text">{{ product.brand }}</p>              
+                  </div>
+                </div>
+              </div>
+
+              {% else %}
+
+              <div class="card-content valign-wrapper">              
+                <div class="col s2">
+                  <img class="responsive-img" src="{{ product.image_url }}">
+                </div>
+                <div class="col s10">
+                  <p class="black-text">{{ product.index }}. {{ product.name }}</p>
+                  <p class="grey-text">{{ product.brand }}</p>              
+                </div>
+              </div>
+
+              {% endif %}
+            </a>
+
+            {% endfor %}

@@ -1,0 +1,131 @@
+  {% extends "base.html" %}
+  {% block body %}
+
+  <!-- !!!!!!!!!! -->
+  <!-- CONTAINER  -->
+  <!-- !!!!!!!!!! -->
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+
+      <div class="row">
+        <div class="col s12 m6 offset-m3 l6 offset-l3">
+
+          {% if is_me %}
+          <div class="card orange">
+            <div class="card-content">
+              <p class="card-title white-text">Is the Ranking Incorrect?</p>
+              <p class="white-text">By giving us to your preferences, get more exact ranking!</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="card-content right">
+              <a class="white-text" href="{{ url_for('comparison') }}"><b>COMPARING</b></a>
+
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- -->
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title activator grey-text text-darken-4"> RANKING </span>
+            </div>
+
+            {% for product in products %}
+            <div class="card-product" id="card-product-{{ product.index }}">
+
+              <div class="divider"></div>
+
+              <a href="{{ url_for('product', product_id=product.id) }}">
+                <div class="card-content valign-wrapper">
+                  <div class="col s2">
+                    <img class="responsive-img" src="{{ product.image_url }}">
+                  </div>
+                  <div class="col s10">
+                    <p class="card-title black-text">{{ product.index }}. {{ product.name }}</p>
+                    <p class="grey-text">{{ product.brand }}</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            {% endfor %}
+
+            {% if progressbar %}
+            <div  id="lastPostsLoader">
+              <div class="divider"></div>
+              <div class="card-content center">
+                <div class="preloader-wrapper big active center">
+                  <div class="spinner-layer spinner-yellow-only">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div><div class="gap-patch">
+                      <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
+          </div>
+
+          {% if is_me %}
+          <div class="card orange" id="multi">
+            <div class="card-content">
+              <p class="card-title white-text">Rate More!</p>
+              <p class="white-text">Through this, Rate more!</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="card-content right">
+              <a class="white-text" href="{{ url_for('multi', product_type_str=product_type_str) }}"><b>Rate More</b></a>
+            </div>
+          </div>
+          {% endif %}
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  {% endblock %}
+
+  {% block body_script %}
+  
+  <!-- !!!!!!!!!! -->
+  <!-- SCRIPTS    -->
+  <!-- !!!!!!!!!! -->
+
+  <script>
+    $(document).ready(function() {
+      $("#multi").hide();
+    });
+
+    $(window).scroll(function(){
+        if  ($(window).scrollTop() == $(document).height() - $(window).height()){
+          lastPostFunc();
+        }
+    });
+    function lastPostFunc(){
+      $.get("{{ path }}" +"?offset=" + $(".card-product:last").attr("id").slice(13),
+        function(data){
+          if (data != "") {
+            $(".card-product:last").after(data);
+          } else {
+            $("#lastPostsLoader").hide();
+            $("#multi").show();
+          }
+        });
+    };
+  </script>
+
+  {% endblock %}

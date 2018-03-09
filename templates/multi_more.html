@@ -1,0 +1,31 @@
+            {% for product in products %}            
+            <div class="card-product" id="card-product-{{ product.index }}">
+              <div class="divider"></div>
+              
+              <div class="card-content valign-wrapper">              
+                <div class="col s2">
+                  <img class="responsive-img" src="{{ product.image_url }}">
+                </div>
+                <div class="col s10">
+                  <p class="card-title black-text">{{ product.name }}</p>
+                  <p class="orange-text">
+                    <a href="">
+                    {% if product.star %}
+                      {% for s in range(0, 5) %}
+                        {% if s < product.star %}
+                        <i class="medium mdi-action-grade orange-text text-lighten-1 star-button-{{s+1}}" id="star-button-{{s+1}}-{{product.id}}"></i>
+                        {% else %}
+                        <i class="medium mdi-action-grade grey-text text-lighten-1 star-button-{{s+1}}" id="star-button-{{s+1}}-{{product.id}}"></i>
+                        {% endif %}
+                      {% endfor %}
+                    {% else %}
+                      {% for s in range(0, 5) %}
+                      <i class="medium mdi-action-grade grey-text text-lighten-1 star-button-{{s+1}}" id="star-button-{{s+1}}-{{product.id}}"></i>
+                      {% endfor %}
+                    {% endif %} 
+                    </a>
+                  </p>              
+                </div>
+              </div>
+            </div>
+            {% endfor %}

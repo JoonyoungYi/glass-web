@@ -1,0 +1,106 @@
+  {% if tutorial %}
+    {% extends "base_tutorial.html" %}
+  {% else%}
+    {% extends "base.html" %}
+  {% endif %}
+  {% block body %}
+
+  {% if tutorial %}
+  <div class="card navbar-card" >
+    <div class="card-content">
+      <div class="container">
+        <div class="section">
+          <span class="card-title black-text"><b>STEP 3:</b> Follow Your Friends!</span>
+          <p>Have a nice time in Glass community with your friends!</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="comparison-header-indicator grey lighten-2"></div>
+  </div>
+  {% endif %}
+
+  <!-- !!!!!!!!!! -->
+  <!-- CONTAINER  -->
+  <!-- !!!!!!!!!! -->
+  <div class="container">
+    <div class="section">
+      <div class="row">
+
+        {% if users_col %}
+        {% for users in users_col %}
+        <div class="col s3">
+          {% for user in users %}
+          <div class="card" id="user-{{user.id}}" >
+
+            <div class="card-content center">
+              <p class="grey-text">Taste Similarity - <b>{{ user.matching }}%</b></p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="card-content center">
+              <a href="{{ url_for('profile', user_id=user.id) }}">
+                <img src="{{ user.image_url }}" alt="" class="user-img-nomargin" onerror="profile_img_error(this);">
+                <p class="title black-text">{{ user.name }}</p>
+                <p class="grey-text">{{ user.about }}</p>
+              </a>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="card-content center">
+              {% if user.is_following %}
+              <a href="#user-{{user.id}}" class="waves-effect waves-light btn orange" id="user-following-{{user.id}}"><p>UNFOLLOW</p></a>
+              {% else %}
+              <a href="#user-{{user.id}}" class="waves-effect waves-light btn white brown-text" id="user-following-{{user.id}}"><p>FOLLOW</p></a>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+        {% else %}
+        <h5 class="center-align">아직 페이스북 친구가 없습니다</h5>
+        {% endif %}
+
+
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
+
+  {% block body_script %}
+  <!-- !!!!!!!!!! -->
+  <!-- SCRIPTS    -->
+  <!-- !!!!!!!!!! -->
+
+  <script>
+    $('body').on('click', "[id^='user-following-']", function(){
+            $.post("{{ url_for('user_following_toggle' ) }} ",
+            {
+              user_id: $(this).attr('id').slice(15),
+            },
+            function(data_obj, status){
+              var following_button = "[id='user-following-".concat(data_obj.user_id.toString()).concat("']");
+              var following_button = $(following_button);
+              var following_button_p = following_button.find('p');
+              if (data_obj.is_following){
+                following_button_p.text("UNFOLLOW");
+                following_button.addClass("orange");
+                following_button.removeClass("white");
+                following_button.removeClass("brown-text");
+              } else {
+                following_button_p.text("FOLLOW");
+                following_button.addClass("brown-text");
+                following_button.addClass("white");
+                following_button.removeClass("orange")
+              }
+            });
+        });
+  </script>
+
+
+
+  {% endblock %}

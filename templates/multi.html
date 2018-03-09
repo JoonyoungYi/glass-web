@@ -1,0 +1,152 @@
+  {% if tutorial %}
+    {% extends "base_tutorial.html" %}
+  {% else%}
+    {% extends "base.html" %}
+  {% endif %}
+  {% block body %}
+
+  <!-- !!!!!!!!!! -->
+  <!-- CONTAINER  -->
+  <!-- !!!!!!!!!! -->
+
+  <div class="card navbar-card">
+    <div class="card-content">
+      <div class="container">
+        <div class="section">
+          <span class="card-title black-text">
+            {% if tutorial %}<b>STEP 1:</b> Rate Drinks You've Experienced!
+            {% else %}Rate More Drinks!{% endif %}
+          </span>
+          <p>You've rated {{ done_number }} drinks, just {{ todo_number }} mores to go!</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="comparison-header-indicator grey lighten-2"></div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+
+      <div class="row">
+
+        <div class="col s12 m8 offset-m2 l6 offset-l3">
+          <div class="card">
+
+            {% for product in products %}
+            <div class="card-product" id="card-product-{{ product.index }}">
+              <div class="divider"></div>
+
+              <div class="card-content valign-wrapper">
+                <div class="col s2">
+                  <img class="responsive-img" src="{{ product.image_url }}">
+                </div>
+                <div class="col s10">
+                  <p class="card-title black-text">{{ product.name }}</p>
+                  <p class="orange-text">
+                    <a href="">
+                    {% if product.star %}
+                      {% for s in range(0, 5) %}
+                        {% if s < product.star %}
+                        <i class="medium mdi-action-grade orange-text text-lighten-1 star-button-{{s+1}}" id="star-button-{{s+1}}-{{product.id}}"></i>
+                        {% else %}
+                        <i class="medium mdi-action-grade grey-text text-lighten-1 star-button-{{s+1}}" id="star-button-{{s+1}}-{{product.id}}"></i>
+                        {% endif %}
+                      {% endfor %}
+                    {% else %}
+                      {% for s in range(0, 5) %}
+                      <i class="medium mdi-action-grade grey-text text-lighten-1 star-button-{{s+1}}" id="star-button-{{s+1}}-{{product.id}}"></i>
+                      {% endfor %}
+                    {% endif %}
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+            {% if progressbar %}
+            <div  id="lastPostsLoader">
+              <div class="divider"></div>
+              <div class="card-content center">
+                <div class="preloader-wrapper big active center">
+                  <div class="spinner-layer spinner-yellow-only">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div><div class="gap-patch">
+                      <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+  
+  {% endblock %}
+
+  {% block body_script %}
+
+  <!-- !!!!!!!!!! -->
+  <!-- SCRIPTS    -->
+  <!-- !!!!!!!!!! -->
+
+  <script>
+
+    $('body').on('click', "[id^='star-button']", function(){
+          $.post("{{ url_for('multi_add') }}",
+          {
+            product_id: $(this).attr('id').slice(14),
+            star: $(this).attr('id').slice(12, 13)
+          },
+          function(data_obj, status){
+
+            var product_id = data_obj.product_id;
+            var star = data_obj.star;
+
+            for (s = 1; s <= 5; s++) {
+              var star_button = $("#star-button-"+ s +"-" + (product_id).toString());
+              if (s<=star){
+                star_button.addClass("orange-text");
+                star_button.removeClass("grey-text");
+              } else {
+                star_button.addClass("grey-text");
+                star_button.removeClass("orange-text");
+              }
+            }
+          });
+      });
+
+
+    $(window).scroll(function(){
+        if  ($(window).scrollTop() == $(document).height() - $(window).height()){
+          lastPostFunc();
+        }
+    });
+    function lastPostFunc(){
+      $.get("{{path}}"+"?offset=" + $(".card-product:last").attr("id").slice(13),
+        function(data){
+          if (data != "") {
+            $(".card-product:last").after(data);
+          } else {
+            $("#lastPostsLoader").hide();
+          }
+        });
+    };
+  </script>
+
+  {% endblock %}
